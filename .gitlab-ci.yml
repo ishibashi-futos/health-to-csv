@@ -1,0 +1,19 @@
+image: golang:1.11.5
+
+stages:
+  - build
+
+job_build_to_linux:
+  stage: build
+  script:
+    - go build -o ./dist/$GOOS-$GOARCH/$CI_PROJECT_NAME
+  only:
+    - master
+  variables:
+    GOOS: linux
+    GOARCH: amd64
+  artifacts:
+    paths:
+      - dist/**/*
+    untracked: false
+    expire_in: 30 days
